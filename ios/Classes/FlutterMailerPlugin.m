@@ -1,6 +1,7 @@
 #import "FlutterMailerPlugin.h"
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import <Flutter/Flutter.h>
 
 @implementation FlutterMailerPlugin
 static FlutterResult flutterResult;
@@ -55,6 +56,14 @@ static FlutterResult flutterResult;
                 NSArray *bccRecipients = options[@"bccRecipients"];
                 [mail setBccRecipients:bccRecipients];
             }
+            
+            if (options[@"imageAttachment"]) {
+                FlutterStandardTypedData* imageAttachment = (FlutterStandardTypedData*) options[@"imageAttachment"];
+                NSData * rawData = imageAttachment.data;
+                NSString *mimeType = @"image/jpeg";
+                [mail addAttachmentData:rawData mimeType:mimeType fileName:@"imageAttachment.jpg"];
+            }
+            
             if (options[@"attachments"]){
                 NSArray *attachments =  options[@"attachments"];
                 for (NSString *attachmentPath in attachments) {

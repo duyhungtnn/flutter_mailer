@@ -23,6 +23,8 @@ class MailOptions {
   /// List of attachment file path
   final List<String> attachments;
 
+  final Uint8List? imageAttachment;
+
   /// define a specific Email App to open
   ///
   /// this can be used to step over App choser sheet when sending an email with attachments.
@@ -41,6 +43,7 @@ class MailOptions {
     this.attachments = const <String>[],
     this.isHTML = false,
     this.appSchema,
+    this.imageAttachment,
   });
 
   Map<String, dynamic> toJson() {
@@ -66,6 +69,10 @@ class MailOptions {
       }
 
       map['attachments'] = paths;
+    }
+
+    if (imageAttachment != null) {
+      map['imageAttachment'] = imageAttachment;
     }
 
     return map;
